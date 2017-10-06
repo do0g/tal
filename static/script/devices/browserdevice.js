@@ -115,7 +115,7 @@ define(
              */
             createImage: function createImage (id, classNames, src, size, onLoad, onError) {
                 var el = this._createElement('img', id, classNames);
-                el.src = src;
+                el.src = '';
                 el.alt = '';
                 if (size) {
                     this.setElementSize(el, size);

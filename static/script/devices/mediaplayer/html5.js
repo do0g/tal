@@ -53,6 +53,8 @@ define(
 
                     this._mediaElement = device._createElement(idSuffix.toLowerCase(), 'mediaPlayer' + idSuffix);
                     this._mediaElement.autoplay = false;
+                    this._mediaElement.canCapture = true;
+                    this._mediaElement.crossOrigin = 'Anonymous';
                     this._mediaElement.style.position = 'absolute';
                     this._mediaElement.style.top = '0px';
                     this._mediaElement.style.left = '0px';

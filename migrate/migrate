@@ -12,7 +12,10 @@ done
 DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null && pwd )"
 
 echo Removing explicit paths from require statements...
-npx jscodeshift static/script -t "$DIR/unstuff-defines.js" # --dry --print
+npx jscodeshift -v 1 static/script -t "$DIR/fix-async-requires.js" # --dry --print
+
+echo Removing explicit paths from define statements...
+npx jscodeshift -v 1 static/script -t "$DIR/unstuff-defines.js" # --dry --print
 
 echo Converting to es modules...
 npx amdtoes6 --dir static/script/ --out out 1>/dev/null

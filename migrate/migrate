@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+set -e
+set -x
+
+SOURCE="${BASH_SOURCE[0]}"
+while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
+  DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null && pwd )"
+  SOURCE="$(readlink "$SOURCE")"
+  [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
+done
+DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null && pwd )"
+
+echo Removing explicit paths from require statements...
+npx jscodeshift static/script -t "$DIR/unstuff-defines.js" # --dry --print
+
+echo Converting to es modules...
+npx amdtoes6 --dir static/script/ --out out 1>/dev/null
